@@ -1,3 +1,11 @@
-# Table of content
+# Summary
 
-* [First Chapter](chapter1.md)
+* [secoo 工作笔记](README.md)
+* [Git基础](chapter1.md)
+    * [打标签](打标签.md)
+* [取得项目的git仓库](取得项目的git仓库.md)
+* [纪录每次更新到仓库](纪录每次更新到仓库.md)
+* [查看提交历史](查看提交历史.md)
+* [撤销操作](撤销操作.md)
+* [远程仓库的使用](远程仓库的使用.md)
+
