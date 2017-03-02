@@ -33,4 +33,5 @@
   * [图层树](ios-coreanimation/图层树.md)
   * [寄宿图](ios-coreanimation/寄宿图.md)
   * [图层几何学](ios-coreanimation/图册几何学.md)
+  * [视觉效果](ios-coreanimation/视觉效果.md)
 
