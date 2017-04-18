@@ -181,13 +181,13 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
     // switch to a background thread and perform your expensive operation
 
- 
+
 
     dispatch_async(dispatch_get_main_queue(), ^{
 
         // switch back to the main thread to update your UI
 
- 
+
 
     });
 
@@ -196,25 +196,21 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 这里为什么dispatch\\_async 嵌套在第一个的里面？这是因为任何UIKit相关的代码都必须在主线程上执行。
 
- 对NSOperation和GCD的详情感兴趣?看看Ray Wenderlich’s \[Multithreading and Grand Central Dispatch on iOS for Beginners\]\(http://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial\) 教程,和 Soheil Azarpour’s \[How To Use NSOperations and NSOperationQueues\]\(http://www.raywenderlich.com/19788/how-to-use-nsoperations-and-nsoperationqueues\) 教程。
+对NSOperation和GCD的详情感兴趣?看看Ray Wenderlich’s [Multithreading and Grand Central Dispatch on iOS for Beginners](/(http://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial\)教程,和 Soheil Azarpour’s [How To Use NSOperations and NSOperationQueues](http://www.raywenderlich.com/19788/how-to-use-nsoperations-and-nsoperationqueues\)教程。
 
 **6）调整图像视图中的图像尺寸**
 
-```
 如果你用UIImageView呈现app束中的图片时，确认图片和UIImageView的尺寸相同。缩放图片会非常的耗时，特别是当你的UIImageView被嵌入UIScrollView。
 
- 如果图片是从远程服务器上下载的，有时你没法控制图片尺寸，或者你不能在服务器上在下载之前缩放它。在这些情况下你可以在图片下载完成后手动缩放一次，最好是在后台进程中。然在UIImageView中使用调整尺寸之后的图片。
-```
+如果图片是从远程服务器上下载的，有时你没法控制图片尺寸，或者你不能在服务器上在下载之前缩放它。在这些情况下你可以在图片下载完成后手动缩放一次，最好是在后台进程中。然在UIImageView中使用调整尺寸之后的图片。
 
 **7）选择正确集合**
 
-```
- 学着怎么在手头工作中使用最合适的类或对象是写出高效代码的基本。当时用集合是\(collections\)，这个说法特别对。
+学着怎么在手头工作中使用最合适的类或对象是写出高效代码的基本。当时用集合是\\(collections\\)，这个说法特别对。
 
- 可喜的是在苹果开发者文档（ [Collections Programming Topics](https://developer.apple.com/library/ios/#documentation/cocoa/conceptual/collections/Collections.html)）中有详细解释可用类之间的关系，还有解释各个类的适用情况。这个文档是每个使用集合的人的必读文档。
+可喜的是在苹果开发者文档（[ Collections Programming Topics](https://developer.apple.com/library/ios/#documentation/cocoa/conceptual/collections/Collections.html)）中有详细解释可用类之间的关系，还有解释各个类的适用情况。这个文档是每个使用集合的人的必读文档。
 
 这是一个最常见的集合类型的快速简介:
-```
 
 * Arrays:有序的值的列表，用index快速查找，通过值查找慢，insert/delete操作慢。
 * Dictionaries:存储键/值对.用index快速查找。
@@ -222,23 +218,19 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 **8）启用Gzip压缩**
 
-```
- 大量和持续增长的app依赖从远端服务器或者外部APIs获取的外部数据。某些时候你可能会开发一些需要下载XML，JSON，HTML或者其他文本格式的应用。
+大量和持续增长的app依赖从远端服务器或者外部APIs获取的外部数据。某些时候你可能会开发一些需要下载XML，JSON，HTML或者其他文本格式的应用。
 
- 问题是移动设备不能保证网络环境，用户可能一分钟在边缘网络，下一分钟又是3G网络，无论什么情况下，你不想你的用户一直等待。
+问题是移动设备不能保证网络环境，用户可能一分钟在边缘网络，下一分钟又是3G网络，无论什么情况下，你不想你的用户一直等待。
 
- 一个减少文件大小并加速下载的网络资源的方法是同时在你的服务器和客户端上使用GZIP压缩，对于文本数据这种有高比率压缩的数据来说非常有用。
+一个减少文件大小并加速下载的网络资源的方法是同时在你的服务器和客户端上使用GZIP压缩，对于文本数据这种有高比率压缩的数据来说非常有用。
 
- 好消息是iOS早已默认支持GZIP压缩，如果你是使用NSURLConnection或者建立在这之上的框架比如[AFNetworking](http://www.raywenderlich.com/30445/afnetworking-crash-course)。更好的消息是一切云服务提供商像 [Google App Engine](https://developers.google.com/appengine/)早已发送压缩之后的响应数据。
+好消息是iOS早已默认支持GZIP压缩，如果你是使用NSURLConnection或者建立在这之上的框架比如[AFNetworking](http://www.raywenderlich.com/30445/afnetworking-crash-course)。更好的消息是一切云服务提供商像 [Google App Engine](https://developers.google.com/appengine/)早已发送压缩之后的响应数据。
 
- 这里有一篇文章[great article about GZIP compression](http://betterexplained.com/articles/how-to-optimize-your-site-with-gzip-compression/) 介绍如何在你的Apache或IIS服务器上启用GZIP。
-```
+这里有一篇文章[great article about GZIP compression](http://betterexplained.com/articles/how-to-optimize-your-site-with-gzip-compression/) 介绍如何在你的Apache或IIS服务器上启用GZIP。
 
 _**中级性能提升**_
 
-```
 好的，当谈到优化你的代码时，你应该很自信你已经初级的方法已经完全掌握了。但有时候有的问题的解决方法并不是那么显而易见，它由你app的结构和代码决定，尽管如此，在正确的上下文中，它们可能是没有价值的。
-```
 
 **9）重用和延迟加载视图**
 
@@ -702,7 +694,7 @@ error];
 你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
 ```
 
-**          
+**            
 **
 
 **24）缓存图像**
