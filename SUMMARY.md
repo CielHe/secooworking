@@ -29,6 +29,7 @@
   * [charles https 解析](charles-https-解析.md)
 * [优化程序](优化程序.md)
   * [代理优化](代理优化.md)
+  * [app速度优化](app.md)
 * [iOS CoreAnimation](ios-coreanimation.md)
   * [图层树](ios-coreanimation/图层树.md)
   * [寄宿图](ios-coreanimation/寄宿图.md)
