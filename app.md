@@ -98,17 +98,15 @@ UIView *view =[[UIView alloc] init];
 这里是一些学习更多关于ARC的非常棒的资源
 
 * [Apple’s official documentation](https://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html)   苹果的官方文档。
-* Matthijs Hollemans’s     [Beginning ARC in iOS Tutorial](http://www.raywenderlich.com/5677/beginning-arc-in-ios-5-part-1)
-* Tony Dahbura’s  [How To Enable ARC in a Cocos2D 2.X Project](http://www.raywenderlich.com/23854/arc-and-cocos2d-v2-x)
-* 如果你还是不确信ARC的好处，看看这篇文章 [eight myths about ARC](http://www.learn-cocos2d.com/2012/06/mythbusting-8-reasons-arc/)  说服你为什么用ARC。
-
-   值得注意的是ARC不能消除所有的内存泄漏。你依然有可能内存泄漏，这主要可能是由于blocks\(块\)，引用循环，CoreFoundation对象管理不善（通常是C结构体，或者是确实很糟糕的代码）。
+* Matthijs Hollemans’s     [Beginning ARC in iOS Tutorial](http://www.raywenderlich.com/5677/beginning-arc-in-ios-5-part-1)
+* Tony Dahbura’s  [How To Enable ARC in a Cocos2D 2.X Project](http://www.raywenderlich.com/23854/arc-and-cocos2d-v2-x)
+* 如果你还是不确信ARC的好处，看看这篇文章 [eight myths about ARC](http://www.learn-cocos2d.com/2012/06/mythbusting-8-reasons-arc/)  说服你为什么用ARC。
 
 值得注意的是ARC不能消除所有的内存泄漏。你依然有可能内存泄漏，这主要可能是由于blocks\(块\)，引用循环，CoreFoundation对象管理不善（通常是C结构体，或者是确实很糟糕的代码）。
 
 **2）适当的地方使用reuseIdentifier**
 
- 在app开发中的一个常见的为UITableViewCells，UICollectionViewCells，UITableViewHeaderFooterViews设置一个正确的reuseIdentifier\\(重用标识\\)。
+在app开发中的一个常见的为UITableViewCells，UICollectionViewCells，UITableViewHeaderFooterViews设置一个正确的reuseIdentifier\\(重用标识\\)。
 
 为了最大化性能，一个tableView的数据源一般应该重用UITableViewCell对象，当它在tableView:cellForRowAtIndexPath:中分配数据给cells的时候。一个表视图维护了一个UITableViewCell对象的队列或者列表，这些对象已被数据源标记为重用。
 
@@ -128,21 +126,17 @@ UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentif
 
 **3）可能的时候设置视图为不透明**
 
-```
- 如果你有不透明视图（opaque views）--也就是说，没有透明度定义的视图，你应该设置他们的opaque属性为YES。
+如果你有不透明视图（opaque views）--也就是说，没有透明度定义的视图，你应该设置他们的opaque属性为YES。
 
- 为什么？ 这会允许系统以最优的方式绘制你的views。这是一个简单的属性可以在Interface Builder 和代码中设置。
+为什么？ 这会允许系统以最优的方式绘制你的views。这是一个简单的属性可以在Interface Builder 和代码中设置。
 
- 苹果的文档 [Apple documentation](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIView_Class/UIView/UIView.html)中有对这个属性的描述
-```
+苹果的文档 [Apple documentation](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIView_Class/UIView/UIView.html)中有对这个属性的描述
 
 _这个属性提供了一个提示给图系统如何对待这个视图。如果设置为YES，绘制系统将会把这个视图视为完全不透明。这样允许系统优化一些绘制操作和提高性能。如果设置为NO，绘图系统会复合这个视图和其他的内容，这个属性的默认值是YES_
 
-```
 在相对静态的屏幕上，设置opaque属性不会有什么大问题。尽管如此，如果你的视图是嵌入在一个scrollView，或者是一个复杂的动画的一部分，不设置这个属性绝对会影响你的程序的性能。
 
 你也可以使用Debug\Color olor Blended Layers选项 在你的模拟器中形象化的看见没有设置为不透明（opaque）的视图.你的目标应该是尽可能多的设置视图为透明。
-```
 
 **4）  避免臃肿的XIB文件**
 
@@ -738,7 +732,7 @@ error];
 你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
 ```
 
-**    
+**      
 **
 
 **24）缓存图像**
