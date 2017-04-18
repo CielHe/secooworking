@@ -154,75 +154,49 @@ _当你载入一个包含了图和声音资源引用的nib文件时，nib加载�
 
 显然这也发生在使用故事板的时候。尽管如此，我还不能找到这种说法的证据。如果你知道，请给我留言。
 
-想学习更多关于故事板的更多内容吗?看看Matthijs Hollemans的 \[Beginning Storyboards in iOS 5 Part 1\]\(http://www.raywenderlich.com/5138/beginning-storyboards-in-ios-5-part-1\)and \[Part 2\]\(http://www.raywenderlich.com/5191/beginning-storyboards-in-ios-5-part-2\).
+想学习更多关于故事板的更多内容吗?看看Matthijs Hollemans的 \[Beginning Storyboards in iOS 5 [Part 1](http://www.raywenderlich.com/5138/beginning-storyboards-in-ios-5-part-1\) and [Part 2](http://www.raywenderlich.com/5191/beginning-storyboards-in-ios-5-part-2\).
 
 **5）不要阻塞主进程**
 
-```
 你永远不应该在主线程中做任何繁重的工作。这是因为UIKIt的所有工作都在主线程中进行，比如绘画，管理触摸，和响应输出。
-```
 
 你的app的所有工作都在主线程上进行就会有阻塞主线程的风险，你的app会表现的反应迟钝。这是在App Store里获一星评论的快速途径!（作者卖萌..）
 
-```
 阻塞主线程最多的情况就是发生在你的app进行I/O操作,包括牵扯到任何需要读写外部资源的任务，比如读取磁盘或者网络
 
 你可以异步的执行网络任务使用NSURLConnection中的这个方法：
-```
 
 ```
-+ (
-void
-)sendAsynchronousRequest:(
-NSURLRequest
- *)request queue:(
-NSOperationQueue
- *)queue completionHandler:(
-void
- (^)(
-NSURLResponse
-*, 
-NSData
-*, 
-NSError
-*))handler
+ (void)sendAsynchronousRequest:(NSURLRequest *)request queue:(NSOperationQueue *)queue completionHandler:(void (^)(NSURLResponse*, NSData*, NSError*))handler
 ```
 
-```
- 或者使用第三方框架比如 [AFNetworking](http://www.raywenderlich.com/30445/afnetworking-crash-course).
+或者使用第三方框架比如 [AFNetworking](http://www.raywenderlich.com/30445/afnetworking-crash-course).
 
-如果你在做任何大开销的操作\(比如执行一个耗时的计算，或者读写磁盘\)使用Grand Central Dispatch（GCD）或者 NSOperations 和 NSOperationQueues.
+如果你在做任何大开销的操作\\(比如执行一个耗时的计算，或者读写磁盘\\)使用Grand Central Dispatch（GCD）或者 NSOperations 和 NSOperationQueues.
 
 使用GCD的模板如下代码所示:
-```
 
 ```
-dispatch_async
-(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 
-0
-), ^{
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
+    // switch to a background thread and perform your expensive operation
 
-// switch to a background thread and perform your expensive operation
-dispatch_async
-(dispatch_get_main_queue(), ^{
+ 
 
+    dispatch_async(dispatch_get_main_queue(), ^{
 
-// switch back to the main thread to update your UI
+        // switch back to the main thread to update your UI
 
-
-
+ 
 
     });
 
 });
 ```
 
-```
-  这里为什么dispatch\_async 嵌套在第一个的里面？这是因为任何UIKit相关的代码都必须在主线程上执行。
+这里为什么dispatch\\_async 嵌套在第一个的里面？这是因为任何UIKit相关的代码都必须在主线程上执行。
 
-  对NSOperation和GCD的详情感兴趣?看看Ray Wenderlich’s [Multithreading and Grand Central Dispatch on iOS for Beginners](http://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial) 教程,和 Soheil Azarpour’s [How To Use NSOperations and NSOperationQueues](http://www.raywenderlich.com/19788/how-to-use-nsoperations-and-nsoperationqueues) 教程。
-```
+ 对NSOperation和GCD的详情感兴趣?看看Ray Wenderlich’s \[Multithreading and Grand Central Dispatch on iOS for Beginners\]\(http://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial\) 教程,和 Soheil Azarpour’s \[How To Use NSOperations and NSOperationQueues\]\(http://www.raywenderlich.com/19788/how-to-use-nsoperations-and-nsoperationqueues\) 教程。
 
 **6）调整图像视图中的图像尺寸**
 
@@ -728,7 +702,7 @@ error];
 你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
 ```
 
-**        
+**          
 **
 
 **24）缓存图像**
