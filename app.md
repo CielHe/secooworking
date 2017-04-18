@@ -140,25 +140,21 @@ _这个属性提供了一个提示给图系统如何对待这个视图。如果�
 
 **4）  避免臃肿的XIB文件**
 
-```
- 故事板，由iOS5引进，很快的替代XIBs。尽管如此，XIBs在一下情况下依然是很有用的。如果你需要在IOS5之前版本的设备上运行或者你想自定义重用的视图，那么你确实不能避免使用它们。
+故事板，由iOS5引进，很快的替代XIBs。尽管如此，XIBs在一下情况下依然是很有用的。如果你需要在IOS5之前版本的设备上运行或者你想自定义重用的视图，那么你确实不能避免使用它们。
 
- 如果你专注使用XIBs，那么让它们尽量的简单。尝试为一个试图控制器创建一个XIB，如果可能的话，把一个视图控制器的视图分层管理在单独的XIBs中。
+如果你专注使用XIBs，那么让它们尽量的简单。尝试为一个试图控制器创建一个XIB，如果可能的话，把一个视图控制器的视图分层管理在单独的XIBs中。
 
 注意当你加载一个XIB到内存的时候，它所有的内容都会载入内存，包括所有的图片。如果你有视图但不是要立即使用，那你就浪费了珍贵的内存。值得注意的是这不会发生在故事板中，因为故事版只会在需要的时候实例化一个视图控制器。
 
 当你载入一个xib，所有的图像文件会被缓存，如果是开发OSX，那么音频文件也会被缓存。
-```
 
 [Apple’s documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/LoadingResources/CocoaNibs/CocoaNibs.html) 如是说：
 
 _当你载入一个包含了图和声音资源引用的nib文件时，nib加载代码读取实际的图片文件和音频文件到内存中并缓存它。在OS X中，图片和音频资源被存储在已命名的缓存 中这样你可以在之后需要的时候访问它们。在iOS中，只有图片资源被缓存，访问图片，你使用NSImage或者UIImage的imageNamed:方法来访问，具体使用取决于你 的平台。_
 
-```
 显然这也发生在使用故事板的时候。尽管如此，我还不能找到这种说法的证据。如果你知道，请给我留言。
 
-想学习更多关于故事板的更多内容吗?看看Matthijs Hollemans的 [Beginning Storyboards in iOS 5 Part 1](http://www.raywenderlich.com/5138/beginning-storyboards-in-ios-5-part-1)and [Part 2](http://www.raywenderlich.com/5191/beginning-storyboards-in-ios-5-part-2).
-```
+想学习更多关于故事板的更多内容吗?看看Matthijs Hollemans的 \[Beginning Storyboards in iOS 5 Part 1\]\(http://www.raywenderlich.com/5138/beginning-storyboards-in-ios-5-part-1\)and \[Part 2\]\(http://www.raywenderlich.com/5191/beginning-storyboards-in-ios-5-part-2\).
 
 **5）不要阻塞主进程**
 
@@ -732,7 +728,7 @@ error];
 你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
 ```
 
-**      
+**        
 **
 
 **24）缓存图像**
