@@ -234,51 +234,39 @@ _**中级性能提升**_
 
 **9）重用和延迟加载视图**
 
- 越多的视图就有越多的绘图操作，最终意味着更多的CPU和内存开销。这说得特别对如果你的app嵌入很多视图在UIScrollView时。
+越多的视图就有越多的绘图操作，最终意味着更多的CPU和内存开销。这说得特别对如果你的app嵌入很多视图在UIScrollView时。
 
+管理这个的技巧是去模拟UITableView 和 UICollectionView的行为:不要一次创建所有的子视图，而是在需要的时候创建，然后把他们假如重用队列中。
 
+这样，你只需要在视图浮动时配置你的视图，避免昂贵的资源分配开销。
 
- 管理这个的技巧是去模拟UITableView 和 UICollectionView的行为:不要一次创建所有的子视图，而是在需要的时候创建，然后把他们假如重用队列中。
+视图创建的时机问题也同样适用于你app的其他地方。试想当你点击一个button时呈现一个视图的情景。至少有两种方法:
 
+1.屏幕第一次载入时创建视图并隐藏它。当你需要的时候，显示出来。
 
+2.需要呈现的时候一次创建视图并显示它。
 
- 这样，你只需要在视图浮动时配置你的视图，避免昂贵的资源分配开销。
+每种方法都有各自的优缺点
 
+使用第一种方法，你消耗了更多内存因为从创建开始到它释放前你都保持了它的内存，然而，当你点击button的时候，你的app会表现得响应快速因为它只需要更改视图的可视化属性。
 
-
- 视图创建的时机问题也同样适用于你app的其他地方。试想当你点击一个button时呈现一个视图的情景。至少有两种方法:
-
-
-
- 1.屏幕第一次载入时创建视图并隐藏它。当你需要的时候，显示出来。
-
-
-
- 2.需要呈现的时候一次创建视图并显示它。
-
-
-
- 每种方法都有各自的优缺点
-
-
-
- 使用第一种方法，你消耗了更多内存因为从创建开始到它释放前你都保持了它的内存，然而，当你点击button的时候，你的app会表现得响应快速因为它只需要更改视图的可视化属性。
-
-
-
- 使用第二种方法会有相反的效果，在需要的时候创建视图，消耗更少的内存，但当button被点击时应用会表现得不那么响应快速。
+使用第二种方法会有相反的效果，在需要的时候创建视图，消耗更少的内存，但当button被点击时应用会表现得不那么响应快速。
 
 **10）缓存，缓存，缓存**
 
-```
   在开发应用时的一个伟大的经验是"Cache what matters"--也就是说那些不大会改变但会平凡被访问的东西。
+
+
 
  你能缓存些什么呢？缓存的候选项有远程服务器的响应，图片，已计算过的值（比如UITableView的行高）。
 
+
+
   NSURLConnection 根据处理的Http头缓存资源到磁盘或者内存中，你甚至可以手动创建一个NSURLRequest值加载缓存过的值。
 
+
+
   这里有一段很棒的代码，用在任何时候你需要针对一个不大会改变的图片创建一个NSURLRequest。
-```
 
 ```
 + (
@@ -321,17 +309,23 @@ return
 }
 ```
 
-```
-  如果想知道更多关于Http caching，NSURLCache，NSURLConnection等内容，请阅读[the NSURLCache entry](http://nshipster.com/nsurlcache/)
+  如果想知道更多关于Http caching，NSURLCache，NSURLConnection等内容，请阅读\[the NSURLCache entry\]\(http://nshipster.com/nsurlcache/\)
+
+
 
   注意，你可以通过NSURLConnection获取取一个URL请求，AFNetworking也可以。有了这个技巧这样你不用改变任何你的网络代码。
 
+
+
   如果要缓存不牵扯到HTTP请求的其他东西，NSCache是很好的选择。
+
+
 
   NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的移除内容。
 
-  对HTTP Cache感兴趣并想学更多的内容？推荐阅读这篇文章[best-practices document on HTTP caching](https://developers.google.com/speed/docs/best-practices/caching)
-```
+
+
+  对HTTP Cache感兴趣并想学更多的内容？推荐阅读这篇文章\[best-practices document on HTTP caching\]\(https://developers.google.com/speed/docs/best-practices/caching\)
 
 **11）考虑绘图**
 
@@ -708,7 +702,7 @@ error];
 你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
 ```
 
-**              
+**                
 **
 
 **24）缓存图像**
