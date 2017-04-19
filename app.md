@@ -196,7 +196,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 这里为什么dispatch\\_async 嵌套在第一个的里面？这是因为任何UIKit相关的代码都必须在主线程上执行。
 
-对NSOperation和GCD的详情感兴趣?看看Ray Wenderlich’s [Multithreading and Grand Central Dispatch on iOS for Beginners](/(http://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial\)教程,和 Soheil Azarpour’s [How To Use NSOperations and NSOperationQueues](http://www.raywenderlich.com/19788/how-to-use-nsoperations-and-nsoperationqueues\)教程。
+对NSOperation和GCD的详情感兴趣?看看Ray Wenderlich’s \[Multithreading and Grand Central Dispatch on iOS for Beginners\]\(/\([http://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial\)教程,和](http://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial%29教程,和) Soheil Azarpour’s [How To Use NSOperations and NSOperationQueues](http://www.raywenderlich.com/19788/how-to-use-nsoperations-and-nsoperationqueues\)教程。
 
 **6）调整图像视图中的图像尺寸**
 
@@ -234,25 +234,39 @@ _**中级性能提升**_
 
 **9）重用和延迟加载视图**
 
-```
  越多的视图就有越多的绘图操作，最终意味着更多的CPU和内存开销。这说得特别对如果你的app嵌入很多视图在UIScrollView时。
+
+
 
  管理这个的技巧是去模拟UITableView 和 UICollectionView的行为:不要一次创建所有的子视图，而是在需要的时候创建，然后把他们假如重用队列中。
 
+
+
  这样，你只需要在视图浮动时配置你的视图，避免昂贵的资源分配开销。
+
+
 
  视图创建的时机问题也同样适用于你app的其他地方。试想当你点击一个button时呈现一个视图的情景。至少有两种方法:
 
+
+
  1.屏幕第一次载入时创建视图并隐藏它。当你需要的时候，显示出来。
+
+
 
  2.需要呈现的时候一次创建视图并显示它。
 
+
+
  每种方法都有各自的优缺点
+
+
 
  使用第一种方法，你消耗了更多内存因为从创建开始到它释放前你都保持了它的内存，然而，当你点击button的时候，你的app会表现得响应快速因为它只需要更改视图的可视化属性。
 
+
+
  使用第二种方法会有相反的效果，在需要的时候创建视图，消耗更少的内存，但当button被点击时应用会表现得不那么响应快速。
-```
 
 **10）缓存，缓存，缓存**
 
@@ -443,7 +457,7 @@ return
 
  相似的，如果你的应用程序依赖于访问特定值的键,那么你可能会想要请求和接收一个键/值对的字典
 
- 通过第一次就获取正确格式的数据,在自己的应用程序中你就会避免很多的重复处理工作,使数据符合你的选择的结构。 
+ 通过第一次就获取正确格式的数据,在自己的应用程序中你就会避免很多的重复处理工作,使数据符合你的选择的结构。
 ```
 
 **16）选择正确的数据格式**
@@ -694,7 +708,7 @@ error];
 你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
 ```
 
-**            
+**              
 **
 
 **24）缓存图像**
