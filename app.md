@@ -281,7 +281,7 @@ NSURLConnection 根据处理的Http头缓存资源到磁盘或者内存中，你
 }
 ```
 
-如果想知道更多关于Http caching，NSURLCache，NSURLConnection等内容，请阅读\[the NSURLCache entry\]\([http://nshipster.com/nsurlcache/\](http://nshipster.com/nsurlcache/\)\)
+如果想知道更多关于Http caching，NSURLCache，NSURLConnection等内容，请阅读\[the NSURLCache entry\]\([http://nshipster.com/nsurlcache/\](http://nshipster.com/nsurlcache/%29\)
 
 注意，你可以通过NSURLConnection获取取一个URL请求，AFNetworking也可以。有了这个技巧这样你不用改变任何你的网络代码。
 
@@ -289,39 +289,27 @@ NSURLConnection 根据处理的Http头缓存资源到磁盘或者内存中，你
 
 NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的移除内容。
 
-对HTTP Cache感兴趣并想学更多的内容？推荐阅读这篇文章\[best-practices document on HTTP caching\]\([https://developers.google.com/speed/docs/best-practices/caching\](https://developers.google.com/speed/docs/best-practices/caching\)\)
+对HTTP Cache感兴趣并想学更多的内容？推荐阅读这篇文章\[best-practices document on HTTP caching\]\([https://developers.google.com/speed/docs/best-practices/caching\](https://developers.google.com/speed/docs/best-practices/caching%29\)
 
 **11）考虑绘图**
 
 在IOS中有很多方法可以制作拥有很棒外观的buttons，你可以是由全尺寸的图像，也可以使用调整尺寸之后的图像，或者你用CALayer，CoreGraphics，甚至OpenGL手动的它们。
 
+当然，每种途径都有不同的复杂度级别和不同的性能，这篇文章非常值得一读\[post about iOS graphics performance here\]\([http://robots.thoughtbot.com/post/36591648724/designing-for-ios-graphics-performance\),这是Apple](http://robots.thoughtbot.com/post/36591648724/designing-for-ios-graphics-performance%29,这是Apple) UIKit团队成员Andy Matuschak发表的文章，里面对各种方法有一些非常棒的见解和对性能的权衡。
 
-
-当然，每种途径都有不同的复杂度级别和不同的性能，这篇文章非常值得一读\[post about iOS graphics performance here\]\(http://robots.thoughtbot.com/post/36591648724/designing-for-ios-graphics-performance\),这是Apple UIKit团队成员Andy Matuschak发表的文章，里面对各种方法有一些非常棒的见解和对性能的权衡。
-
-
-
- 使用预渲染图片更快，因为iOS不用创建一张图像和绘制图形到屏幕上\\(图像已经处理好了\\)。问题是你需要全部把这些图片放进应用束里,增加它的尺寸。那就是为什么使用可调整尺寸的图片是那么好:你通过移除”浪费了的“图片空间来节约空间。你也不需要为不同的元素生成不同的图片。（例如 buttons）
-
-
+使用预渲染图片更快，因为iOS不用创建一张图像和绘制图形到屏幕上\\(图像已经处理好了\\)。问题是你需要全部把这些图片放进应用束里,增加它的尺寸。那就是为什么使用可调整尺寸的图片是那么好:你通过移除”浪费了的“图片空间来节约空间。你也不需要为不同的元素生成不同的图片。（例如 buttons）
 
 尽管如此，用图片你会失去代码调整你图片的能力，需要一次又一次的生成它们然后把它们加入到应用中。这是个缓慢的过程。另外一点如果你有动画或者很多张稍微变化的图片（例如 颜色叠加），你需要加很多的图片增加了应用束的大小。
 
-
-
- 总结一下，你需要想对你来说最重要的是什么：绘图性能还是app的大笑.通常两个都很重要，所以你会在一个工程里使用这两种方法。
+总结一下，你需要想对你来说最重要的是什么：绘图性能还是app的大笑.通常两个都很重要，所以你会在一个工程里使用这两种方法。
 
 **12）处理内存警告**
 
-  当系统内存低的时候iOS会通知所有的正在运行的app,关于低内存警告的处理苹果官方文档 \[official Apple documentation\]\(http://developer.apple.com/library/ios/\#documentation/iphone/conceptual/iphoneosprogrammingguide/PerformanceTuning/PerformanceTuning.html\)描述：
+当系统内存低的时候iOS会通知所有的正在运行的app,关于低内存警告的处理苹果官方文档 \[official Apple documentation\]\([http://developer.apple.com/library/ios/\#documentation/iphone/conceptual/iphoneosprogrammingguide/PerformanceTuning/PerformanceTuning.html\)描述：](http://developer.apple.com/library/ios/#documentation/iphone/conceptual/iphoneosprogrammingguide/PerformanceTuning/PerformanceTuning.html%29描述：)
 
+如果你的应用收到这个警告，它必须尽可能多的释放内存。最好的方法是移除对缓存，图像对象，和其他稍后要创建的对象的强引用。
 
-
-  如果你的应用收到这个警告，它必须尽可能多的释放内存。最好的方法是移除对缓存，图像对象，和其他稍后要创建的对象的强引用。
-
-
-
-  幸运的是，UIKit提供了一些方法去接收低内存警告:
+幸运的是，UIKit提供了一些方法去接收低内存警告:
 
 * 实现App代理中的applicationDidReceiveMemoryWarning:方法。
 * 重载你自定义UIViewController子类中的didReceiveMemoryWarning方法。
@@ -329,13 +317,11 @@ NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的�
 
   一旦收到这些警告，你的处理方法必须立刻响应并释放不必要的内存。
 
+举例，如果视图当前不可见，UIViewController的默认行为是清除这些视图；子类可以通过清除额外的数据结构来补充父类的默认行为。一个应用程序维护一个图片的缓存，没有在屏幕上的图片都会被释放。
 
+一旦收到内存警告，释放可能的全部内存是很重要的，否则你就有让你的app被系统杀死的的风险。
 
-  举例，如果视图当前不可见，UIViewController的默认行为是清除这些视图；子类可以通过清除额外的数据结构来补充父类的默认行为。一个应用程序维护一个图片的缓存，没有在屏幕上的图片都会被释放。
-
-  一旦收到内存警告，释放可能的全部内存是很重要的，否则你就有让你的app被系统杀死的的风险。
-
-  尽管如此，开始扑杀对象释放内存的时候要小心，因为你需要保证它们会在之后重新创建。当你开发app的时候，用你的模拟器上的模拟内存警告功能测试这种情况。
+尽管如此，开始扑杀对象释放内存的时候要小心，因为你需要保证它们会在之后重新创建。当你开发app的时候，用你的模拟器上的模拟内存警告功能测试这种情况。
 
 **13）重用大开销对象**
 
@@ -349,59 +335,38 @@ NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的�
 
 ```
 // in your .h or inside a class extension
-@property
- (
-nonatomic
-, 
-strong
-) 
-NSDateFormatter
- *formatter;
 
+@property (nonatomic, strong) NSDateFormatter *formatter;
 
-
+ 
 // inside the implementation (.m)
+
 // When you need, just use self.formatter
 
+- (NSDateFormatter *)formatter {
 
-- (
-NSDateFormatter
- *)formatter {
+    if (! _formatter) {
 
+        _formatter = [[NSDateFormatter alloc] init];
 
-if
- (! _formatter) {
-
-        _formatter = [[
-NSDateFormatter
- alloc] init];
-
-        _formatter.dateFormat = 
-@"EEE MMM dd HH:mm:ss Z yyyy"
-; 
-// twitter date format
-
+        _formatter.dateFormat = @"EEE MMM dd HH:mm:ss Z yyyy"; // twitter date format
 
     }
 
-
-return
- _formatter;
+    return _formatter;
 
 }
 ```
 
-```
    同样要记住设置一个NSDateFormatter的日期格式几乎跟创建一个新的一样慢。因此，如果在你的应用中你频繁需要处理多个日期格式，你的代码应该获利于初始化创建，重用，多个NSDateFormatter对象。
-```
 
 **14） 使用精灵表**
 
-```
 你是一个游戏开发者吗？精灵表是你的好朋友之一.精灵表让绘制比标准屏幕绘制方法更快速，消耗更少的内存。
 
+
+
 这里有两个很棒的精灵表使用的教程
-```
 
 1. [How To Use Animations and Sprite Sheets in Cocos2D](http://www.raywenderlich.com/32045/how-to-use-animations-and-sprite-sheets-in-cocos2d-2-x)
 2. [How to Create and Optimize Sprite Sheets in Cocos2D with Texture Packer and Pixel Formats](http://www.raywenderlich.com/2361/how-to-create-and-optimize-sprite-sheets-in-cocos2d-with-texture-packer-and-pixel-formats)
@@ -674,7 +639,7 @@ error];
 你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
 ```
 
-**                  
+**                    
 **
 
 **24）缓存图像**
