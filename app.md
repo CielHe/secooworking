@@ -338,7 +338,7 @@ NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的�
 
 @property (nonatomic, strong) NSDateFormatter *formatter;
 
- 
+
 // inside the implementation (.m)
 
 // When you need, just use self.formatter
@@ -358,13 +358,11 @@ NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的�
 }
 ```
 
-   同样要记住设置一个NSDateFormatter的日期格式几乎跟创建一个新的一样慢。因此，如果在你的应用中你频繁需要处理多个日期格式，你的代码应该获利于初始化创建，重用，多个NSDateFormatter对象。
+同样要记住设置一个NSDateFormatter的日期格式几乎跟创建一个新的一样慢。因此，如果在你的应用中你频繁需要处理多个日期格式，你的代码应该获利于初始化创建，重用，多个NSDateFormatter对象。
 
 **14） 使用精灵表**
 
 你是一个游戏开发者吗？精灵表是你的好朋友之一.精灵表让绘制比标准屏幕绘制方法更快速，消耗更少的内存。
-
-
 
 这里有两个很棒的精灵表使用的教程
 
@@ -379,33 +377,39 @@ NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的�
 
 **15）避免重复处理数据**
 
-```
  很多app调用函数获取远程服务器上的数据.这些数据通常是通过JSON 或者 XML格式来传输。非常重要的是在请求和接收数据的时候努力在两端使用相同的数据结构。
+
+
 
  理由?在内存中操纵数据以合适你的数据结构是非常昂贵的。
 
+
+
  比如,如果你需要在表格视图中显示数据，最好请求和接收数据是数组的格式,以避免任何中间操纵数据,使其适合你在app中使用的数据结构
+
+
 
  相似的，如果你的应用程序依赖于访问特定值的键,那么你可能会想要请求和接收一个键/值对的字典
 
+
+
  通过第一次就获取正确格式的数据,在自己的应用程序中你就会避免很多的重复处理工作,使数据符合你的选择的结构。
-```
 
 **16）选择正确的数据格式**
 
-```
 你可以有很多方法从web 服务中传递数据到你的app中   
 
-JSON 是一种通常比XML小且解析更快的格式，它的传输的内容也比较小。自iOS5起，内置的JSON解析很好用 [built-in JSON deserialization](http://www.raywenderlich.com/5492/working-with-json-in-ios-5)
+
+
+JSON 是一种通常比XML小且解析更快的格式，它的传输的内容也比较小。自iOS5起，内置的JSON解析很好用 \[built-in JSON deserialization\]\(http://www.raywenderlich.com/5492/working-with-json-in-ios-5\)
+
+
 
 尽管如此，XML的一个优势当你使用SAXparsing方法时，你可以传输过程中读取它，在面的非常大的数据时，你不必像JSON一样在数据下载完之后才开始读取。
-```
 
 **17）适当的设置背景图片**
 
-```
 像iOS编码的其他工作一样，至少有两种不同方式去替换你视图的背景图片。
-```
 
 1. 你可以设置你的视图的背景颜色为UIColor的colorWithPatternImage创建的颜色。
 2. 你可以添加一个UIImageView子试图给View
@@ -414,120 +418,93 @@ JSON 是一种通常比XML小且解析更快的格式，它的传输的内容也
 
 ```
 // You could also achieve the same result in Interface Builder
-UIImageView
- *backgroundView = [[
-UIImageView
- alloc] initWithImage:[
-UIImage
- imageNamed:
-@"background"
-]];
 
-[
-self
-.view addSubview:backgroundView];
+ UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+
+[self.view addSubview:backgroundView];
 ```
 
-```
  尽管如此，如果你计划用模式图片背景，你应该是用UIColor的colorWithPatternImage。它更快一些，而且这种情况不会使用很多内存。
-```
 
 ```
-self
-.view.backgroundColor = [
-UIColor
- colorWithPatternImage:[
-UIImage
- imageNamed:
-@"background"
-]];
+self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
 ```
 
 **18）减少你的网络占用**
 
-```
 UIWebView 是非常游泳的.它非常容易用来显示web内容，甚至创建你app的视窗。这些都是标准UIKit 空间很难做到的。
 
-尽管如此，你可能注意你可以用在你的app中的UIWebView组件并没有Apple的Safari app快。这是Webkit’s的Nitro引擎的限制使用。[JIT compilation](http://en.wikipedia.org/wiki/Just-in-time_compilation).
+
+
+尽管如此，你可能注意你可以用在你的app中的UIWebView组件并没有Apple的Safari app快。这是Webkit’s的Nitro引擎的限制使用。\[JIT compilation\]\(http://en.wikipedia.org/wiki/Just-in-time\_compilation\).
+
+
 
  所以为了获得最佳的性能，你需要调整你的HTML。第一件事是尽可能多的避免Javascript，包括避免大的框架比如jQuery。有时使用vanilla Javascript取代依赖的框架会快很多。
 
+
+
  随时随地遵循异步加载Javascript文件的实践。特别当它们不直接影响到页面表现的时候，比如分析脚本。
+
+
 
 最后，总是要意识到你在用的图片，保持图片的正确尺寸。正如这个教程前面所提到的，利用精灵表的优势来节约内存和提高速度。
 
- 想要获取更多的信息，看看[WWDC 2012 session \#601 – Optimizing Web Content in UIWebViews and Websites on iOS](http://developer.apple.com/videos/wwdc/2012/).
-```
+
+
+ 想要获取更多的信息，看看\[WWDC 2012 session \\#601 – Optimizing Web Content in UIWebViews and Websites on iOS\]\(http://developer.apple.com/videos/wwdc/2012/\).
 
 **19） 设置阴影路径**
 
-```
  你需要给视图或者layer添加一个阴影,你应该怎么做?
 
+
+
  大多数开发者是添加 QuartzCore框架到工程中,然后写如下代码:
-```
 
 ```
-#import 
-<
-QuartzCore/QuartzCore.h
->
-// Somewhere later ...
-UIView
- *view = [[
-UIView
- alloc] init];
+#import <QuartzCore/QuartzCore.h>
 
+ // Somewhere later ...
 
-// Setup the shadow ...
+UIView *view = [[UIView alloc] init];
 
+ // Setup the shadow ...
 
-view.layer.shadowOffset = 
-CGSizeMake
-(
--1.0
-f, 
-1.0
-f);
+view.layer.shadowOffset = CGSizeMake(-1.0f, 1.0f);
 
-view.layer.shadowRadius = 
-5.0
-f;
+view.layer.shadowRadius = 5.0f;
 
-view.layer.shadowOpacity = 
-0.6
-;
+view.layer.shadowOpacity = 0.6;
 ```
 
-```
   看起来非常简单,是吧?
+
+
 
   不好的是这个方法有一个问题。核心动画必须要先做一幕动画确定视图具体形状之后才渲染阴影，这是非常费事的操作。
 
+
+
   这里有个替代方法让系统更好的渲染，设置阴影路径:
-```
 
 ```
-view.layer.shadowPath = [[
-UIBezierPath
- bezierPathWithRect:view.bounds] 
-CGPath
-];
+view.layer.shadowPath = [[UIBezierPath bezierPathWithRect:view.bounds] CGPath];
 ```
 
-```
- 如果你想知道这个内容的更多技巧，Mark Pospesel 写过一篇[post about shadowPath](http://markpospesel.wordpress.com/2012/04/03/on-the-importance-of-setting-shadowpath/).
+ 如果你想知道这个内容的更多技巧，Mark Pospesel 写过一篇\[post about shadowPath\]\(http://markpospesel.wordpress.com/2012/04/03/on-the-importance-of-setting-shadowpath/\).
+
+
 
  设置阴影路径，iOS不需要总是计算如何绘制阴影。而是用已经计算好的的路径。坏消息是它依赖与你的视图格式，你是视图可能很难计算这个路径。另一个问题是你需要在每次视图的框架改变时更新阴影路径。
-```
 
 **20） 优化你的表格视图**
 
-```
 表格视图需要快速的滚动，如果不能，用户能确切注意到很滞后。
 
+
+
 为了让你的表格视图流畅的滚动，保证你实现了下列的建议。
-```
 
 * 通过正确的reuseIdentifier重用cells
 * 尽量多的设置views 为不透明，包括cell本身。
@@ -580,66 +557,46 @@ _Note: 监察人不会运行你的app在Xcode调试中, 所以确保测试启动
 
 **23）**使用自动释放池
 
-```
  NSAutoreleasePool负责释放在代码块中的自动释放对象。通常，它是被UIKit自动调用的。但是也有一些场景我们需要手动创建NSAutoreleasePools。
 
- 举个例子，如果你创建太多的临时对象在你的代码中，你会注意到你的内存用量会增加直到对象被释放掉。问题是内存只有在UIKit排空\(drains\)自动释放池的时候才能被释放，这意味着内存被占用的时间超过了需要。               
+
+
+ 举个例子，如果你创建太多的临时对象在你的代码中，你会注意到你的内存用量会增加直到对象被释放掉。问题是内存只有在UIKit排空\\(drains\\)自动释放池的时候才能被释放，这意味着内存被占用的时间超过了需要。               
+
+
 
  好消息是你可以在你的@autoreleasepool段中创建临时对象来避免上述情况。代码如下所示。
-```
 
 ```
-NSArray
- *urls = 
-<
-# An array of file URLs #
->
-;
-for
- (
-NSURL
- *url 
-in
- urls) {
+NSArray *urls = <# An array of file URLs #>;
+for (NSURL *url in urls) {
 
+    @autoreleasepool {
 
-@autoreleasepool
- {
+        NSError *error;
 
+        NSString *fileContents = [NSString stringWithContentsOfURL:url
 
-NSError
- *error;
+                                         encoding:NSUTF8StringEncoding error:&error];
 
-
-NSString
- *fileContents = [
-NSString
- stringWithContentsOfURL:url
-
-                                         encoding:
-NSUTF8StringEncoding
- error:
-&
-error];
-
-
-/* Process the string, creating and autoreleasing more objects. */
-
+        /* Process the string, creating and autoreleasing more objects. */
 
     }
 
 }
 ```
 
-```
 在每次迭代之后会自动释放所有的对象。
 
 
 
-你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
-```
 
-**                    
+
+
+
+你可以阅读更多关于NSAutoreleasePool的内容\[Apple’s official documentation\]\(https://developer.apple.com/library/ios/\#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html\).
+
+**                      
 **
 
 **24）缓存图像**
