@@ -254,112 +254,84 @@ _**中级性能提升**_
 
 **10）缓存，缓存，缓存**
 
-  在开发应用时的一个伟大的经验是"Cache what matters"--也就是说那些不大会改变但会平凡被访问的东西。
+在开发应用时的一个伟大的经验是"Cache what matters"--也就是说那些不大会改变但会平凡被访问的东西。
 
+你能缓存些什么呢？缓存的候选项有远程服务器的响应，图片，已计算过的值（比如UITableView的行高）。
 
+NSURLConnection 根据处理的Http头缓存资源到磁盘或者内存中，你甚至可以手动创建一个NSURLRequest值加载缓存过的值。
 
- 你能缓存些什么呢？缓存的候选项有远程服务器的响应，图片，已计算过的值（比如UITableView的行高）。
-
-
-
-  NSURLConnection 根据处理的Http头缓存资源到磁盘或者内存中，你甚至可以手动创建一个NSURLRequest值加载缓存过的值。
-
-
-
-  这里有一段很棒的代码，用在任何时候你需要针对一个不大会改变的图片创建一个NSURLRequest。
+这里有一段很棒的代码，用在任何时候你需要针对一个不大会改变的图片创建一个NSURLRequest。
 
 ```
-+ (
-NSMutableURLRequest
- *)imageRequestWithURL:(
-NSURL
- *)url {
++ (NSMutableURLRequest *)imageRequestWithURL:(NSURL *)url {
+
+   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 
 
-NSMutableURLRequest
- *request = [
-NSMutableURLRequest
- requestWithURL:url];
+   request.cachePolicy = NSURLRequestReturnCacheDataElseLoad; // this will make sure the request always returns the cached image
 
+    request.HTTPShouldHandleCookies = NO;
 
-   request.cachePolicy = 
-NSURLRequestReturnCacheDataElseLoad
-; 
-// this will make sure the request always returns the cached image
+    request.HTTPShouldUsePipelining = YES;
 
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
 
-    request.HTTPShouldHandleCookies = 
-NO
-;
-
-    request.HTTPShouldUsePipelining = 
-YES
-;
-
-    [request addValue:
-@"image/*"
- forHTTPHeaderField:
-@"Accept"
-];
-
-
-return
- request;
+    return request;
 
 }
 ```
 
-  如果想知道更多关于Http caching，NSURLCache，NSURLConnection等内容，请阅读\[the NSURLCache entry\]\(http://nshipster.com/nsurlcache/\)
+如果想知道更多关于Http caching，NSURLCache，NSURLConnection等内容，请阅读\[the NSURLCache entry\]\([http://nshipster.com/nsurlcache/\](http://nshipster.com/nsurlcache/\)\)
 
+注意，你可以通过NSURLConnection获取取一个URL请求，AFNetworking也可以。有了这个技巧这样你不用改变任何你的网络代码。
 
+如果要缓存不牵扯到HTTP请求的其他东西，NSCache是很好的选择。
 
-  注意，你可以通过NSURLConnection获取取一个URL请求，AFNetworking也可以。有了这个技巧这样你不用改变任何你的网络代码。
+NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的移除内容。
 
-
-
-  如果要缓存不牵扯到HTTP请求的其他东西，NSCache是很好的选择。
-
-
-
-  NSCache像NSDictionary，但是当系统需要回收内存的时候会自动的移除内容。
-
-
-
-  对HTTP Cache感兴趣并想学更多的内容？推荐阅读这篇文章\[best-practices document on HTTP caching\]\(https://developers.google.com/speed/docs/best-practices/caching\)
+对HTTP Cache感兴趣并想学更多的内容？推荐阅读这篇文章\[best-practices document on HTTP caching\]\([https://developers.google.com/speed/docs/best-practices/caching\](https://developers.google.com/speed/docs/best-practices/caching\)\)
 
 **11）考虑绘图**
 
-```
 在IOS中有很多方法可以制作拥有很棒外观的buttons，你可以是由全尺寸的图像，也可以使用调整尺寸之后的图像，或者你用CALayer，CoreGraphics，甚至OpenGL手动的它们。
 
-当然，每种途径都有不同的复杂度级别和不同的性能，这篇文章非常值得一读[post about iOS graphics performance here](http://robots.thoughtbot.com/post/36591648724/designing-for-ios-graphics-performance),这是Apple UIKit团队成员Andy Matuschak发表的文章，里面对各种方法有一些非常棒的见解和对性能的权衡。
 
- 使用预渲染图片更快，因为iOS不用创建一张图像和绘制图形到屏幕上\(图像已经处理好了\)。问题是你需要全部把这些图片放进应用束里,增加它的尺寸。那就是为什么使用可调整尺寸的图片是那么好:你通过移除”浪费了的“图片空间来节约空间。你也不需要为不同的元素生成不同的图片。（例如 buttons）
+
+当然，每种途径都有不同的复杂度级别和不同的性能，这篇文章非常值得一读\[post about iOS graphics performance here\]\(http://robots.thoughtbot.com/post/36591648724/designing-for-ios-graphics-performance\),这是Apple UIKit团队成员Andy Matuschak发表的文章，里面对各种方法有一些非常棒的见解和对性能的权衡。
+
+
+
+ 使用预渲染图片更快，因为iOS不用创建一张图像和绘制图形到屏幕上\\(图像已经处理好了\\)。问题是你需要全部把这些图片放进应用束里,增加它的尺寸。那就是为什么使用可调整尺寸的图片是那么好:你通过移除”浪费了的“图片空间来节约空间。你也不需要为不同的元素生成不同的图片。（例如 buttons）
+
+
 
 尽管如此，用图片你会失去代码调整你图片的能力，需要一次又一次的生成它们然后把它们加入到应用中。这是个缓慢的过程。另外一点如果你有动画或者很多张稍微变化的图片（例如 颜色叠加），你需要加很多的图片增加了应用束的大小。
 
+
+
  总结一下，你需要想对你来说最重要的是什么：绘图性能还是app的大笑.通常两个都很重要，所以你会在一个工程里使用这两种方法。
-```
 
 **12）处理内存警告**
 
-```
-  当系统内存低的时候iOS会通知所有的正在运行的app,关于低内存警告的处理苹果官方文档 [official Apple documentation](http://developer.apple.com/library/ios/#documentation/iphone/conceptual/iphoneosprogrammingguide/PerformanceTuning/PerformanceTuning.html)描述：
+  当系统内存低的时候iOS会通知所有的正在运行的app,关于低内存警告的处理苹果官方文档 \[official Apple documentation\]\(http://developer.apple.com/library/ios/\#documentation/iphone/conceptual/iphoneosprogrammingguide/PerformanceTuning/PerformanceTuning.html\)描述：
+
+
 
   如果你的应用收到这个警告，它必须尽可能多的释放内存。最好的方法是移除对缓存，图像对象，和其他稍后要创建的对象的强引用。
 
+
+
   幸运的是，UIKit提供了一些方法去接收低内存警告:
-```
 
 * 实现App代理中的applicationDidReceiveMemoryWarning:方法。
 * 重载你自定义UIViewController子类中的didReceiveMemoryWarning方法。
 * 注册接收UIApplicationDidReceiveMemoryWarningNotification的通知
 
-  ```
   一旦收到这些警告，你的处理方法必须立刻响应并释放不必要的内存。
 
+
+
   举例，如果视图当前不可见，UIViewController的默认行为是清除这些视图；子类可以通过清除额外的数据结构来补充父类的默认行为。一个应用程序维护一个图片的缓存，没有在屏幕上的图片都会被释放。
-  ```
 
   一旦收到内存警告，释放可能的全部内存是很重要的，否则你就有让你的app被系统杀死的的风险。
 
@@ -702,7 +674,7 @@ error];
 你可以阅读更多关于NSAutoreleasePool的内容[Apple’s official documentation](https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html).
 ```
 
-**                
+**                  
 **
 
 **24）缓存图像**
